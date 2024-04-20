@@ -1,29 +1,30 @@
 import React from 'react'
+import './Cart.css'
 
-const Cart = ({ cartItems }) => {
+const Cart = () => {
 
-    const calculateTotal= (cartItems) => {
-        return cartItems.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)
-    }
+    const cartItems =  [
+        {id:1, name: 'Product 1', price: 10},
+        {id:1, name: 'Product 2', price: 20},
+        {id:1, name: 'Product 3', price: 30},
+    ]
+
+    const totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
 
   return (
     <div className='cart'>
-        <h1>Shopping Cart</h1>
-        <div className="cart-items">
+        <h2>Your Cart</h2>
+        <ul>
             {cartItems.map(item => (
-                <div className="cart-item">
-                    <img src={item.image} alt="" />
-                    <div className="item-details">
-                        <h3>{item.name}</h3>
-                        <p>$ {item.price}</p>
-                        <p>{item.quantity}</p>
-                    </div>
-                </div>
+                <li key={item.id}>
+                    <span>{item.name}</span>
+                    <span>${item.price}</span>
+                </li>
             ))}
-        </div>
-        <div className="cart-total">
-            <h3>Total Amount : ${calculateTotal(cartItems)}</h3>
-            <button>Proceed to Checkout</button>
+        </ul>
+        <div className="total">
+            <span>Total : </span>
+            <span>${totalPrice}</span>
         </div>
     </div>
   )
