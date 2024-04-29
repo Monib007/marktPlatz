@@ -1,13 +1,16 @@
 import React from 'react'
 import './Cart.css'
 
-const Cart = () => {
+const Cart = ({ cartItems }) => {
 
-    const cartItems =  [
-        {id:1, name: 'Product 1', price: 10},
-        {id:1, name: 'Product 2', price: 20},
-        {id:1, name: 'Product 3', price: 30},
-    ]
+    if(!cartItems || cartItems.length === 0){
+        return (
+            <div className="cart">
+                <h2>Your Cart</h2>
+                <p>No items in the cart</p>
+            </div>
+        )
+    }
 
     const totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
 

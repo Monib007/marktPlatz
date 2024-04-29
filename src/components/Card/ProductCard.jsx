@@ -3,7 +3,7 @@ import ImageViewer from '../ImageViewer/ImageViewer'
 import './ProductCard.css'
 
 
-const ProductCard = ({ props }) => {
+const ProductCard = ({ product, addToCart }) => {
 
     const [showImages, setShowImages] = useState(false);
 
@@ -11,25 +11,31 @@ const ProductCard = ({ props }) => {
         setShowImages(!showImages);
     }
 
-    const addToCart = () => {
-        console.log('Added to cart', props.title)
+    const handleAddToCart = () => {
+        addToCart(product);
+        console.log('Added to cart', product.title)
+    }
+
+    //conditional rendering to check product & thumbnail exists
+    if(!product || !product.thumbnail) {
+        return <div>Error: Product data is missing or invalid</div>;
     }
 
   return (
-    <div className="props-card">
+    <div className="product-card">
         <div className="image-container">
-            <img className='image' src={props.thumbnail} alt={props.title} />
+            <img className='image' src={product.thumbnail} alt={product.title} />
         </div>
         <div className="details">
-            <h3 className='title'>{props.title}</h3>
-            <p>{props.description}</p>
-            <p className='price'>$ {props.price}</p>
-            <p>{props.category}</p>
+            <h3 className='title'>{product.title}</h3>
+            <p>{product.description}</p>
+            <p className='price'>$ {product.price}</p>
+            <p>{product.category}</p>
             <button onClick={handleViewImages} className='btn'>View Images</button>
-            {showImages && <ImageViewer images={props.images}/>}
+            {showImages && <ImageViewer images={product.images}/>}
         </div>
         <div className='cart-container'>
-            <button className='cart' onClick={addToCart}>Add to Cart</button>
+            <button className='cart' onClick={handleAddToCart}>Add to Cart</button>
         </div>
     </div>
   )

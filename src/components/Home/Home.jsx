@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import ProductList from '../Products/ProductList';
+import Cart from '../Cart/Cart';
 import './Home.css'
 
-const Home = () => {
+const Home = ({ setCartItems }) => {
 
   const [products, setProducts] = useState([]);
+  const [cartItems, setLocalCartItems] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -24,6 +26,10 @@ const Home = () => {
     }
   };
 
+  const addToCart = (product) => {
+    setLocalCartItems([...cartItems, product]);
+    setCartItems([...cartItems, product]);
+  }
 
   return (
     <div className="home-page">
@@ -33,8 +39,9 @@ const Home = () => {
       <main className='card'>
         <section className="featured-products">
           <h2>Featured Products</h2>
-          <ProductList products={products}/>
+          <ProductList products={products} addToCart={addToCart}/>
         </section>
+        
       </main>
 
       <footer>
